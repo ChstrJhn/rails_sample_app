@@ -10,4 +10,5 @@ test "layout_links" do
 	assert_select "a[href=?]", about_path
 	assert_select "a[href=?]", contact_path
   end
+  
 end
