@@ -28,8 +28,9 @@ class UsersControllerTest < ActionController::TestCase
     assert_difference('User.count', 1) do
       post :create, user: { email: 'notthesame@email.com', name: @user.name, password: 'password', password_confirmation: 'password'}
     end
-
-    assert_redirected_to user_path(assigns(:user))
+    
+    assert_redirected_to root_url
+    # assert_redirected_to user_path(assigns(:user))
   end
 
   test "should show user" do
@@ -75,11 +76,20 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to root_url
   end
 
-  # test "should destroy user" do
-  #   assert_difference('User.count', -1) do
-  #     delete :destroy, id: @user
-  #   end
+  test "should destroy user" do
+    assert_difference('User.count', -1) do
+      log_in_as(@user)
+      delete :destroy, id: @user
+    end
 
-  #   assert_redirected_to users_path
-  # end
+    assert_redirected_to users_path
+  end
+
+  test "should not allow the admin attribute to be edited via the web" do
+    log_in_as(@other_user)
+    assert_not @other_user.admin?
+    patch :update, id: @other_user, user: {password:"111222333", password_confirmation:"111222333", admin: true}
+    assert_not @other_user.admin?
+  end
+
 end
