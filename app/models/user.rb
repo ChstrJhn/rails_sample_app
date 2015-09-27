@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 	before_save :downcase_email
 	before_create :create_activation_digest
 
-	has_many :microposts
+	has_many :microposts, dependent: :destroy
 	has_secure_password
 
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -13,6 +13,9 @@ class User < ActiveRecord::Base
 	                  uniqueness: { case_sensitive: false }
 	validates :password, length: { minimum: 6 }, allow_blank: true
 
+    def feed
+      microposts
+    end
 
 	def User.digest(string)
       cost = ActiveModel::SecurePassword.min_cost ? 
@@ -40,8 +43,8 @@ class User < ActiveRecord::Base
 	end
 
 	def activate
-	  user.update_attribute(:activated, true)
-	  user.update_attribute(:activated_at, Time.zone.now)
+	  update_attribute(:activated, true)
+	  update_attribute(:activated_at, Time.zone.now)
 	end
 
 	def send_activation_email

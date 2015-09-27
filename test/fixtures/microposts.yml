@@ -1,9 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  content: MyText
-  user_id: 1
+  content: "i just fucked a bitch"
+  created_at: <%= 10.minutes.ago %>
 
 two:
-  content: MyText
-  user_id: 1
+  content: "Ewww wtf is that shit. Btw, check this out http://twitter.com. @twitter"
+  created_at: <%= 3.years.ago %>
+
+three:
+  content: "Ok this is sad as fuck boi http://www.youtube.com"
+  created_at: <%= 2.hours.ago %>
+
+most_recent:
+  content: "This is a test ya dig"
+  created_at: <%= Time.zone.now %>

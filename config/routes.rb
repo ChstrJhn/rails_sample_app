@@ -3,7 +3,6 @@ Rails.application.routes.draw do
 
   get 'password_resets/edit'
 
-  resources :microposts
   resources :users
 
   root 'static_pages#home'
@@ -21,7 +20,8 @@ Rails.application.routes.draw do
   resources :account_activations, only: [:edit]
   #password reset
   resources :password_resets, only: [:new,:create,:edit,:update]
-
+  #microposts
+  resources :microposts, only: [:create,:destroy]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

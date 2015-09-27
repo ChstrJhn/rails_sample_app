@@ -17,3 +17,10 @@ User.create(name:"Chester", email:"chesterajohn@gmail.com",password:"111222333",
 		        password_confirmation: password, activated:true,activated_at:Time.zone.now)
 
 end
+
+users = User.order(:created_at).take(6)
+
+40.times do 
+  content = Faker::Lorem.sentence(5)
+  users.each {|user| user.microposts.create!(content:content)}
+end
